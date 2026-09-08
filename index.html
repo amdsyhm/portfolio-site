@@ -9,6 +9,19 @@
 
 <body>
 
+    <!-- STICKY PROJECT NAVIGATION -->
+    <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#home" class="site-nav-brand">AS<span>.</span></a>
+        <div class="site-nav-links">
+            <a href="#home" class="site-nav-link is-active">Home</a>
+            <a href="#project1" class="site-nav-link">Warisan Norman</a>
+            <a href="#project2" class="site-nav-link">Stylo Co.</a>
+            <a href="#project3" class="site-nav-link">Friska Pharmacy</a>
+            <a href="#project4" class="site-nav-link">SmartTime</a>
+            <a href="#contact" class="site-nav-link">Contact</a>
+        </div>
+    </nav>
+
     <!-- HERO SECTION -->
     <section class="section" id="home">
     <div class="container">
@@ -20,9 +33,9 @@
                 <h1 class="hero-title">Ahmad Syahmi</h1>
 
                 <p class="hero-description">
-                    I am a final-semester Diploma in Computer Science student interested in web and software development.
-                    I have experience working with HTML, CSS, Java, MySQL, VB.NET, and Microsoft Access through academic
-                    projects involving websites, database systems, and desktop applications.
+                    I am a final-semester Diploma in Computer Science student who enjoys turning ideas into practical
+                    digital experiences. I am especially interested in creating clear, user-friendly websites and
+                    applications, solving problems thoughtfully, and learning through hands-on projects.
                 </p>
 
                 <div class="quick-nav">
@@ -43,9 +56,6 @@
         </div>
     </div>
 
-    <div class="scroll-indicator">
-        <div class="scroll-line"></div>
-    </div>
 </section>
 
 
@@ -196,6 +206,54 @@
     </section>
 
 
+    <!-- PROJECT 4 -->
+    <section class="section project-section project4-section" id="project4">
+        <div class="container">
+            <div class="project-grid reverse">
+
+                <div class="project-content">
+                    <span class="project-number">PROJECT 04</span>
+
+                    <h2 class="project-title">SmartTime Mobile Application</h2>
+
+                    <p class="project-description">
+                        A fully functioning mobile timetable and event-management application designed to help
+                        students organise their weekly schedules in one place. SmartTime lets users create a
+                        personalised timetable, add upcoming events, and keep track of their academic routine.
+                    </p>
+
+                    <p class="project-description">
+                        The app also provides timely reminders when an event is approaching, making it easier to
+                        stay prepared and avoid missing important classes or activities.
+                    </p>
+
+                    <div class="project-tags">
+                        <span class="tag">JSON</span>
+                        <span class="tag">XAMPP</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">Node.js</span>
+                    </div>
+                </div>
+
+                <div class="project-carousel mobile-project-carousel">
+                    <button class="carousel-btn prev" aria-label="Previous SmartTime screenshot">&#10094;</button>
+
+                    <div class="carousel-window">
+                        <div class="carousel-track">
+                            <img src="project4-1.jpg" class="carousel-img" alt="SmartTime login screen">
+                            <img src="project4-2.jpg" class="carousel-img" alt="SmartTime weekly timetable screen">
+                            <img src="project4-3.jpg" class="carousel-img" alt="SmartTime event reminder popup">
+                        </div>
+                    </div>
+
+                    <button class="carousel-btn next" aria-label="Next SmartTime screenshot">&#10095;</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
     <!-- CONTACT SECTION -->
     <section class="section" id="contact">
         <div class="container">
@@ -203,8 +261,8 @@
                 <h2 class="project-title">Contact Me</h2>
 
                 <p class="project-description">
-                    I am currently looking for an internship opportunity where I can apply my skills,
-                    gain industry experience, and continue improving as a developer.
+                    If you would like to connect, discuss a project, or learn more about my work, feel free to reach
+                    out. I am always happy to hear from you.
                 </p>
 
                 <div class="contact-box">
@@ -222,8 +280,49 @@
     </section>
 
 
-    <!-- JAVASCRIPT FOR IMAGE CAROUSEL -->
+    <!-- NAVIGATION, SECTION REVEALS, AND IMAGE CAROUSELS -->
     <script>
+        const sections = document.querySelectorAll(".section");
+        const navLinks = document.querySelectorAll(".site-nav-link");
+
+        const sectionObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+
+                    navLinks.forEach(function(link) {
+                        const isCurrent = link.getAttribute("href") === "#" + entry.target.id;
+                        link.classList.toggle("is-active", isCurrent);
+                        if (isCurrent) {
+                            link.setAttribute("aria-current", "page");
+                        } else {
+                            link.removeAttribute("aria-current");
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.35 });
+
+        sections.forEach(function(section) {
+            sectionObserver.observe(section);
+        });
+
+        navLinks.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                const target = document.querySelector(link.getAttribute("href"));
+
+                if (target) {
+                    event.preventDefault();
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    window.history.replaceState(null, "", link.getAttribute("href"));
+                }
+            });
+        });
+
+        window.addEventListener("scroll", function() {
+            document.body.classList.toggle("is-scrolled", window.scrollY > 24);
+        }, { passive: true });
+
         const carousels = document.querySelectorAll(".project-carousel");
 
         carousels.forEach(function(carousel) {
